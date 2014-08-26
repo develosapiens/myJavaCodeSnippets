@@ -1,0 +1,168 @@
+    echo "Példák a paraméterezésre:                                 "
+    echo "                                                          "
+    echo " a 2 3  1 vam s  -80  400 adatok.text                     "
+    echo " m 1 2  2 vm  v   10% 70%                                 "
+    echo " v 2 4 12 va  v  342  987                                 "
+    echo " h 2 3  3 n   v                                           "
+    echo "                                                          "
+    echo "A paraméterek elhagyhatóak, de csak jobbról balra haladva."
+    echo "A parancssorban  nem szereplő paraméterek helyett egyrészt"
+    echo "a program  alapértelmezett  értékei, vagy az ezeket felül-"
+    echo "bíráló,  beállítófájlból  (inditasi_parameterek.conf) vett"
+    echo "értékek használatosak.                                    "
+    echo "Ha az első paraméter egy h betű, akkor a további paraméte-"
+    echo "rek  figyelembevétele  helyett a program  kiírja ezt a le-"
+    echo "írást."
+    echo "                                                          "
+    echo "              NYOMD MEG AZ ENTER BILLENTYŰT               "
+    read f
+    echo
+    echo
+    echo
+    echo "           A PARAMÉTEREK RÉSZLETES MAGYARÁZATA            "
+    echo "          -------------------------------------           "
+    echo
+    echo "1.                                                        "
+    echo "--                                                        "
+    echo "A program az alábbiak  szerint paraméterezhető indításkor:"
+    echo "Az első paraméter azt határozza meg, hogy először az angol"
+    echo "megfelelő következzen, vagy először a magyar, netán vegye-"
+    echo "sen véletlenszerűen legyen először a magyar, vagy az angol"
+    echo "megfelelő kiírva. Lehetséges paraméterek:                 "
+    echo " a   - angollal  kezd.                                    "
+    echo " m   - magyarral kezd.                                    "
+    echo " v   - vegyesen  kezd.                                    "
+    echo " h   - ennek a leírásnak a megjelenítése.                 "
+    echo
+    echo
+    echo "2.                                                        "
+    echo "--                                                        "
+    echo "A következő paraméter egy egész szám lehet.  Azt határozza"
+    echo "meg, hogy az először kiírt megfelelő után hány másodpercet"
+    echo "várjon a gép, mielőtt kiírja a másik nyelvű megfelelőt.   "
+    echo
+    echo
+    echo "3.                                                        "
+    echo "--                                                        "
+    echo "A harmadik paraméter szintén olyan egész szám, ami várako-"
+    echo "zási időt jelől,  méghozzá a  következő szópár  kiírásának"
+    echo "megkezdése előtti  várakozási időt adja meg.  Vagyis ennyi"
+    echo "ideig látható a képernyőn mindkét nyelvű megfelelő együtt."
+    echo 
+    echo "              NYOMD MEG AZ ENTER BILLENTYŰT               "
+    echo
+    read f
+    echo
+    echo "4.                                                        "
+    echo "--                                                        "
+    echo "A negyedik  paraméter ad  lehetőséget arra,  hogy az előző"
+    echo "két paramétertől eltérő várakozási időt adjunk meg. Törté-"
+    echo "netesen  várakozzon-e  billentyűleütésre  a  gép,  mielőtt"
+    echo "további kiírást kezdene. Ha ez a paraméter:               "
+    echo " 1  akkor az első kiírás után ENTER  leütésével  léphetünk"
+    echo "    tovább. FIGYELEM, csak magában az  -ENTER-  billentyűt"
+    echo "    kell leütni,  mert ha bármi  más  billentyűt  előzőleg"
+    echo "    lenyomva ütünk ENTERt, akkor leáll a program.         "
+    echo "    A következő páros kiírása a  korábban megadott paramé-"
+    echo "    ter szerint beállított idő kivárásával indul.         "
+    echo
+    echo " 2  Ez esetben a korábban  megadott időt  kivárja a  gép a"
+    echo "    két különböző nyelvi variáns kiírása között, új  kife-"
+    echo "    jezés kiírásához viszont (csak) ENTER billentyű lenyo-"
+    echo "    másával léphetünk tovább                              "
+    echo
+    echo "              NYOMD MEG AZ ENTER BILLENTYŰT               "
+    read f
+    echo " 12 Ekkor mind az első és második sor,  azaz a  két nyelvi"
+    echo "    variáns között, mind a következő szópárra  ugrás előtt"
+    echo "    üres ENTER lenyomására van szükség, azaz a  beállított"
+    echo "    várakozási időket nem veszi figyelembe a program.     "
+    echo 
+    echo "Ha nem akarjuk használni  azt a lehetőséget,  hogy -ENTER-"
+    echo "billentyűvel  léphessünk akár a  másik nyelvű megfelelőre,"
+    echo "akár a következő szópárra, de a következő, az ötödik para-"
+    echo "métert használni akarjuk, akkor ide írjunk a fenti  három-"
+    echo "tól eltérő számot, mondjuk például egy 3-ast.  Ha a követ-"
+    echo "kező paramétereket  nem akarjuk  használni, akkor a negye-"
+    echo "ötödik paramétert el is hagyhatjuk.                       "
+    echo
+    echo "              NYOMD MEG AZ ENTER BILLENTYŰT               "
+    echo
+    read f
+    echo
+    echo "5.                                                        "
+    echo "--                                                        "
+    echo "Az ötödik paraméter azt határozza meg, hogy melyik  nyelvi"
+    echo "változatot olvassa fel hangosan a gép:                    "
+    echo " va   esetén az angolt mondja hangosan a gép.             "
+    echo " vm        esetén a magyart olvassa hangosan.             "
+    echo " vam  (vagy vma)           esetén mindkettőt.             "
+    echo 
+    echo "A fenti négy lehetőségtől  eltérő esetekben csöndben marad"
+    echo "a gép.                                                    "
+    echo "                                                          "
+    echo "Figyelem!                                                 "
+    echo "---------                                                 "
+    echo "    A hangos felolvasáshoz szükséges az espeak csomag!    "
+    echo
+    echo
+    echo "6.                                                        "
+    echo "--                                                        "
+    echo "Létezik egy hatodik paraméter is. Ha ennek értéke: s, azaz"
+    echo "egy önmagában álló s betű. Ennek használatával sorrendben,"
+    echo "egyesével jeleníti meg a gép az összes kifejezéspárt.   Ha"
+    echo "nem sorrendben akarod  megjeleníteni a  szópárokat,  akkor"
+    echo "ide inkább egy r betűt írj.  Ha további  paramétereket nem"
+    echo "akarsz megadni, akkor ezt is elhagyhatod.                 "
+    echo
+    echo "              NYOMD MEG AZ ENTER BILLENTYŰT               "
+    echo
+    read f
+    echo
+    echo "7.                                                        "
+    echo "--                                                        "
+    echo "Lehetőség  van  szűkíteni  a rendelkezésre  álló  szópárok"
+    echo "közül megjelenítésre kerülők körét.  Következő, azaz hete-"
+    echo "dik paraméter lehet:                                      "
+    echo
+    echo "   - százalékos értékként, a százalékjel (%) használatával"
+    echo "     megadott egész szám.  Ez esetben  a teljes szókészlet"
+    echo "     adott százalékánál kezdődik a kifejezéspárok program-"
+    echo "     működés szempontjából történő figyelembe vétele.     "
+    echo "         Például  50% esetén a kifejezésgyűjtemény felétől"
+    echo "                  veszi figyelembe a párosokat.           "
+    echo
+    echo "   - Százalékjel nélküli egész szám paraméter sorszámként,"
+    echo "     azaz a szűkített készlet első lehetséges előfordulása"
+    echo "     az adott sorszámú kifejezéspár lesz.                 "
+    echo "         Például: 50  az ötvenedik kifejezéspárt jelenti a"
+    echo "                  kifejezésállományból.                   "
+    echo
+    echo "   - Ha a paraméterként  megadott egész szám előtt egy (-)"
+    echo "     mínusz jel szerepel, akkor az egész szám azt a tarto-"
+    echo "     mányt jelenti, ami a következő  paraméterben megadott"
+    echo "     felső korláttól visszafelé  figyelembe vételre kerül."
+    echo "     Például a -22 a következő paraméterben kijelölt felső"
+    echo "     korláttól lefelé számított 22 elemet adja meg.       "
+    echo 
+    echo "              NYOMD MEG AZ ENTER BILLENTYŰT               "
+    echo
+    read f
+    echo
+    echo "8.                                                        "
+    echo "--                                                        "
+    echo "A nyolcadik paraméter esetén százalékosan, vagy egész szám"
+    echo "segítségével adhatjuk meg a felső korlátot.               "
+    echo "         Például: 100% a készlet utolsó elemét jelenti.   "
+    echo
+    echo
+    echo "9.                                                        "
+    echo "--                                                        "
+    echo "Bármelyik paraméter elhagyható, de ezesetben a beállítások"
+    echo "vagy a beállítófájl alapján kerülnek meghatározásra,  vagy"
+    echo "ha nem létezik a beállítófájl (indulasi_parameterek.conf),"
+    echo "akkor a program belső beállításai jutnak érvényre.        "
+    echo
+    echo "         KEZDÉSHEZ NYOMD MEG AZ ENTER BILLENTYŰT          "
+    echo
+    read f
