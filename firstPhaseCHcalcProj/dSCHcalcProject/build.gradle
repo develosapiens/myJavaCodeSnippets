@@ -1,0 +1,138 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+////apply plugin: 'application'
+
+////mainClassName = "net.develoSapiens.dSCHcalcProject.CarboHydrateCalculator"
+
+defaultTasks 'init'
+
+def libDir = new File('lib/test')
+def confDir = new File('conf')
+def logDir = new File('log')
+
+task makeDirs {
+    description 'creates conf/, lib/test/, and log/ dirs.'
+    confDir.mkdirs()
+    libDir.mkdirs()
+    logDir.mkdirs()
+}
+
+task libCopy(type: Copy) {
+    description 'copies configuration.runtime into build/libs/'
+////    into "$buildDir/libs"
+    from configurations.runtime
+    into "build/libs"
+}
+
+repositories {
+   flatDir(dirs: 'lib')
+//   mavenCentral()
+}
+
+task copyLog4j2XML(type: Copy) {
+  description 'from: ../confs/ to: src/test/resources/ include: log4j2.xml'
+  from '../confs'
+  into 'src/test/resources'
+  include 'log4j2.xml'
+}
+
+//////dependencies {
+//////compile fileTree(dir: 'lib', includes: ['*.jar'])
+//////}
+
+dependencies {
+   testCompile fileTree('lib/test')
+//   //////compile fileTree('conf')
+   compile 'joda-time:joda-time:2.4'
+   compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.0.2'
+   compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.0.2'
+}
+
+task init {
+    description 'copyLog4j2XML, makeDirs, copyTask, copyConfTask, initSOurceFolders, eclipse, check'
+    dependsOn 'copyLog4j2XML'
+    dependsOn 'makeDirs'
+    dependsOn 'copyTask'
+//    dependsOn 'copyConfTask'
+    dependsOn 'initSourceFolders'
+    dependsOn 'eclipse'
+    dependsOn check
+}
+
+task initSourceFolders {
+   description 'creates std file structure for java, test and resources'
+   sourceSets*.java.srcDirs*.each { it.mkdirs() }
+   sourceSets*.resources.srcDirs*.each { it.mkdirs() }
+}
+
+//sourceSets.main.java.srcDir 'conf'
+
+jar {
+    description 'creates jar; basename: dSxmlConfigProcessor, version: 0.0.1'
+    baseName = 'dSxmlConfigProcessor'
+    version =  '0.0.1'
+    ////from ('conf/') {
+    ////into 'conf/'
+    ////include '**/*.xml'
+//////}
+////   manifest {
+////      attributes(
+////        'Class-Path': '. ./conf/ conf/ /conf/ conf/log4j2.xml /conf/log4j2.xml',
+////        'Main-Class': 'net.develoSapiens.dSxmlConfigProcessor.EntryPoint')
+////   }
+}
+
+task copyTask(type: Copy) {
+   description 'something has to be inside src and lib dirs because of behaviour of git'
+   from '../deps'
+   into 'lib'
+   include '**/*.jar'
+   exclude '**/*.txt'
+}
+
+//task copyConfTask(type: Copy) {
+//   description 'copies log4j2 xml to conf dir'
+//   from '../confs'
+//   into 'conf'
+//   into 'src/main/resources'
+//   include 'log4j2.xml'
+//}
+
+task buildAndUpload(type: Copy) {
+   description 'depends on build, libCopy. from: build/libs to: ../deps include jars'
+   dependsOn build
+   dependsOn libCopy
+   from 'build/libs'
+   into '../deps'
+   include '**/*.jar'
+}
+
+//task delMyDirX(type: Delete) {
+//    description 'deletes all xml files in myOwnDstDir directory'
+//    delete fileTree(dir: 'myOwnDstDir', include: '*.xml')
+//}
+
+//task delMyDir(type: Delete) {
+//    description 'deletes all files in myOwnDstDir except dont_delete.xml'
+//    delete fileTree(dir: 'myOwnDstDir', exclude: 'dont_delete.xml')
+//}
+
+//task delToInit(type: Delete) {
+//    description 'deletes build/, src/main/java/someDir/, src/test/java/someDir/, bin/'
+//    delete fileTree(dir: 'build')
+//    delete 'src/main/java/someDir'
+//    delete 'src/test/java/someDir'
+//    delete 'bin'
+//}
+
+//task cleanAllMyDir(type: Delete) {
+//    description 'deletes all files in myOwnDstDir'
+//    delete fileTree(dir: 'myOwnDstDir')
+//}
+
+//delToInit.dependsOn cleanEclipse
+
+//build.dependsOn copyTask
+//clean.dependsOn delMyDir
+
+

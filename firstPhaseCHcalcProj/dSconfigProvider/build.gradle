@@ -1,0 +1,101 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+//apply plugin: 'application'
+
+//mainClassName = "net.develoSapiens.dSloggerProvider.EntryPoint"
+
+defaultTasks 'init'
+
+def libDir = new File('lib/test')
+
+task pp << {
+
+task -> println "$task.project.name"
+}
+
+task makeLibDir {
+    description 'creates lib/test/ dir.'
+    libDir.mkdirs()
+}
+
+repositories {
+   flatDir(dirs: 'lib')
+}
+
+dependencies {
+   testCompile fileTree('lib/test')
+//   compile 'joda-time:joda-time:2.4'
+   compile group: 'net.develoSapiens.dSExceptions', name: 'dSExceptions', version: '0.0.1'
+   testCompile group: 'net.develoSapiens.dSExceptions', name: 'dSExceptions', version: '0.0.1'
+   compile group: 'net.develoSapiens.dSloggerProvider', name: 'dSloggerProvider', version: '0.0.1'
+   testCompile group: 'net.develoSapiens.dSloggerProvider', name: 'dSloggerProvider', version: '0.0.1'
+   compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.0.2'
+   compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.0.2'
+}
+
+task libCopy(type: Copy) {
+    description 'copies configuration.runtime into build/libs/'
+//    into "$buildDir/libs"
+    from configurations.runtime
+    into "build/libs"
+}
+
+task copyLog4j2XML(type: Copy) {
+  description 'from: ../confs/ to: src/test/resources/ include: log4j2.xml'
+  from '../confs'
+  into 'src/test/resources'
+  include 'log4j2.xml'
+}
+
+task buildAndUpload(type: Copy) {
+   description 'depends on build, libCopy and copyLog4j2XML. from: build/libs to: ../deps include jars'
+   dependsOn build
+   dependsOn libCopy
+   dependsOn copyLog4j2XML
+   from 'build/libs'
+   into '../deps'
+   include '**/*.jar'
+}
+
+task init {
+    description 'makeLibDir, copyTask, libCopy, copyLog4j2XML, initSOurceFolders, eclipse, check'
+    dependsOn 'makeLibDir'
+    dependsOn 'copyTask'
+    dependsOn 'libCopy'
+    dependsOn 'copyLog4j2XML'
+    dependsOn 'initSourceFolders'
+    dependsOn 'eclipse'
+    dependsOn check
+}
+
+task initSourceFolders {
+   description 'creates std file structure for java, test and resources'
+   sourceSets*.java.srcDirs*.each { it.mkdirs() }
+   sourceSets*.resources.srcDirs*.each { it.mkdirs() }
+}
+
+jar {
+    description 'creates jar; basename: dSconfigProvider, version: 0.0.1'
+    baseName = 'dSconfigProvider'
+    version =  '0.0.1'
+//    from("$projectDir") {
+//      include 'conf/**'
+//   }
+}
+
+task copyTask(type: Copy) {
+   description 'something has to be inside src and lib dirs because of behaviour of git'
+   from '../deps'
+   into 'lib'
+   include '**/*.jar'
+   exclude '**/*.txt'
+}
+
+//task delToInit(type: Delete) {
+//    delete fileTree(dir: 'build')
+//    delete 'src/main/java/someDir'
+//    delete 'src/test/java/someDir'
+//    delete 'bin'
+//}
+
+
