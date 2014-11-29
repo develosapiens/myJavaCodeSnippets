@@ -1,0 +1,25 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+//apply plugin: 'application'
+
+defaultTasks 'listSubs'
+
+//allprojects {
+//    task listProjs << { task -> println "$task.project.name" }
+//}
+
+subprojects {
+    task listSubs << { task -> println "$task.project.name" }
+}
+
+configure(subprojects.findAll {it.name != 'dSExceptions'}) {
+    listSubs << {println '- This is not dSExceptions project.'}
+}
+
+project(':dSconfigProvider').listSubs << {
+    println "- It is written out only when dSconfigProvider turns."
+}
+
+//dependencies {
+//    compile(project(":project:subproject"))
+//}
