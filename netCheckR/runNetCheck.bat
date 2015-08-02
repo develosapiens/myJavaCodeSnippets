@@ -1,0 +1,1 @@
+start java -cp conf/;lib/*;dS-netConnectChecker.jar net.develosapiens.net.connectioncheckertrayapp.EntryPoint

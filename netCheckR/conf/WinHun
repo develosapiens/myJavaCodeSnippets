@@ -1,0 +1,12 @@
+ERROR_DIALOG_TITLE=HÁLÓZATI HIBA!!!
+ERROR_DIALOG_MESSAGE=A develoSapiens hálózati kapcsolat\nellenõrzõ eszköze hibát észlelt!
+POPUP_SCROLL_OFF=Visszacsuk
+EXIT_LABEL=Kilépés
+DETAILS_LABEL=Eredmények:
+DEVELOSAPIENS_LABEL=       develoSapiens    
+TOOL_TIP=Van internetem?
+TRAY_NAME=Van internet?
+CHECK_NOW_MENU_ITEM_LABEL=Ellenõrzés
+TOGGLE_TO_OFF_LABEL=Felfüggesztés
+TOGGLE_TO_ON_LABEL=Újjra mehet
+SHOW_ERROR_PANE_CHECK_BOX_LABEL=Felugró figyelmeztetés
