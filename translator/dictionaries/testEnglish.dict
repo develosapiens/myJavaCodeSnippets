@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<SingleDict>
+    <the_header>
+        <dictLanguage>testEnglish</dictLanguage>
+        <startTime>2015-08-20T11:11:11</startTime>
+        <endTime>2015-10-20T11:11:11</endTime>
+        <theId>5</theId>
+        <startId>0</startId>
+        <endId>0</endId>
+        <topics>
+            <topic>topic one</topic>
+            <topic>topic three</topic>
+            <topic>topic two</topic>
+        </topics>
+    </the_header>
+    <elements>
+        <element>
+            <id>1</id>
+            <expression>kilo</expression>
+            <myLanguage>testEnglish</myLanguage>
+            <myTopic>work</myTopic>
+            <theDate>2015-10-20T10:10:10</theDate>
+            <active>false</active>
+            <links>
+                <link>
+                    <language>i-nese</language>
+                    <linkNumbers>
+                        <linkNumber>911</linkNumber>
+                        <linkNumber>928</linkNumber>
+                        <linkNumber>944</linkNumber>
+                    </linkNumbers>
+                </link>
+                <link>
+                    <language>piresian</language>
+                    <linkNumbers>
+                        <linkNumber>78</linkNumber>
+                        <linkNumber>512</linkNumber>
+                    </linkNumbers>
+                </link>
+                <link>
+                    <language>russ</language>
+                    <linkNumbers>
+                        <linkNumber>123</linkNumber>
+                        <linkNumber>124</linkNumber>
+                        <linkNumber>125</linkNumber>
+                    </linkNumbers>
+                </link>
+            </links>
+            <examples>
+                <example>example 1</example>
+                <example>example 2</example>
+            </examples>
+        </element>
+        <element>
+            <id>2</id>
+            <expression>tango</expression>
+            <myLanguage>testEnglish</myLanguage>
+            <myTopic></myTopic>
+            <theDate>2015-10-20T10:10:10</theDate>
+            <active>true</active>
+            <links/>
+            <examples/>
+        </element>
+        <element>
+            <id>3</id>
+            <expression>zulu</expression>
+            <myLanguage>testEnglish</myLanguage>
+            <myTopic></myTopic>
+            <theDate>2015-10-20T10:10:10</theDate>
+            <active>true</active>
+            <links/>
+            <examples/>
+        </element>
+        <element>
+            <id>4</id>
+            <expression>bravo</expression>
+            <myLanguage>testEnglish</myLanguage>
+            <myTopic></myTopic>
+            <theDate>2015-10-20T10:10:10</theDate>
+            <active>true</active>
+            <links/>
+            <examples/>
+        </element>
+        <element>
+            <id>5</id>
+            <expression>charlie</expression>
+            <myLanguage>testEnglish</myLanguage>
+            <myTopic></myTopic>
+            <theDate>2015-10-20T10:10:10</theDate>
+            <active>true</active>
+            <links/>
+            <examples/>
+        </element>
+    </elements>
+</SingleDict>
