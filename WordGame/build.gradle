@@ -1,0 +1,257 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'application'
+apply plugin: 'jacoco'
+
+//project.archivesBaseName = "my-preferred-artifactId"
+
+mainClassName = "com.codesse.codetest.wordgame.EntryPoint"
+
+defaultTasks 'listTasks'
+
+String version = file('VERSION').text
+
+//String TARGETDIR = "JAVA_UPLOAD_DIR_TPL"
+//String TESTUPDIR = "TEST_UPLOAD_DIR_TPL"
+
+task listTasks << {
+  println "$project.name"
+  println "  listTasks"
+  println "  jar"
+  println "  delDoxLogSrcDirs"
+  println "  delLogFiles"
+//  println "  dSUpload"
+//  println "  dSUploadTests"
+//  println "  dSUpDel"
+//  println "  dSUpTestDel"
+  println "  jacocoTestReport"
+  println "  delJBehaveAndTarget"
+  println "  jBehave"
+  println "  newJBehave"
+  println "  jBehaveStyleCopy"
+  println "  jbCopy"
+  println ""
+}
+
+jacoco {
+    toolVersion = "0.7.2.201409121644"
+    reportsDir = file("$buildDir/JACOCO/")
+}
+
+test {
+    jacoco {
+        append = false
+        destinationFile = file("$buildDir/jacoco/jacocoTest.exec")
+        classDumpFile = file("$buildDir/jacoco/classpathdumps")
+    }
+}
+
+test {
+    outputs.upToDateWhen { false }
+    exclude "**/jBehaveTests/**"
+    exclude "**/NewjBehaveTests/**"
+    exclude "**/resources/**"
+    afterTest { desc, result -> 
+        println "Executing test ${desc.name} [${desc.className}] with result: ${result.resultType}"
+    }
+}
+
+task jBehave(type: Test) {
+    description ' jBehave test reports for examples'
+    outputs.upToDateWhen { false }
+//includeCategories 'com.example.ifaOne'
+//excludeCategories 'com.example.quiteOther'
+//java:
+// interface ifaOne {}
+// interface ifaOther {}
+// @Category(ifaOne.class, ifaOther.class)
+// @Test
+
+    exclude "**/jUnitTests/**"
+    //include "**/jBehaveTests/Stories/**"
+    exclude "**/NewjBehaveTests/**"
+    exclude "**/jBehaveTests/Steps/**"
+    exclude "**/resources/**"
+//    testLogging {
+//        events "passed", "skipped", "failed", "standardOut", "standardError"
+//    }
+//    afterTest { desc, result -> 
+//        println "Executing test ${desc.name} [${desc.className}] with result: ${result.resultType}" 
+//    }
+    reports.html.destination = file("$buildDir/reports/jBehaveTests")
+    reports.junitXml.destination = file("$buildDir/reports/jBehaveXML")
+}
+
+task newJBehave(type: Test) {
+    description ' jBehave test reports for NewJBehave examples'
+    outputs.upToDateWhen { false }
+    exclude "**/jUnitTests/**"
+    //include "**/NewjBehaveTests/**"
+    exclude "**/jBehaveTests/**"
+    exclude "**/resources/**"
+//    testLogging {
+//        events "passed", "skipped", "failed", "standardOut", "standardError"
+//    }
+//    afterTest { desc, result -> 
+//        println "Executing test ${desc.name} [${desc.className}] with result: ${result.resultType}" 
+//    }
+    reports.html.destination = file("$buildDir/reports/NewjBehaveTests")
+    reports.junitXml.destination = file("$buildDir/reports/NewjBehaveXML")
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        csv.enabled false
+        html.destination "${buildDir}/jacocoHtml"
+    }
+}
+
+repositories {
+   mavenCentral()
+}
+
+dependencies {
+    compile fileTree('lib')
+    //compile files('hibernate.jar', 'libs/spring.jar')
+    compile 'joda-time:joda-time:2.4'
+    compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.3'
+    compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.3'
+    compile group: 'com.github.stephenc.jcip', name: 'jcip-annotations', version: '1.0-1'
+    testCompile "junit:junit:4.11"
+    testCompile group: 'org.jbehave', name: 'jbehave-core', version: '3.9.5'
+    testCompile group: 'de.codecentric', name: 'jbehave-junit-runner', version: '1.1.2'
+    testCompile group: 'org.easytesting', name: 'fest-swing', version: '1.2.1'
+}
+
+jar {
+    description 'creates jar; basename: WordGame, version: ' + version
+    println 'version: ' + version
+    baseName = 'WordGame'
+
+    version =  version
+//    from ('conf/') {
+//    into '/'
+//    include '**/*.xml'
+//    }
+    manifest {
+      attributes(
+        'Class-Path': '. conf/ lib/log4j-api-2.3.jar lib/log4j-core-2.3.jar',
+        'Implementation-Version': version,
+        'Main-Class': 'com.codesse.codetest.wordgame.EntryPoint')
+   }
+}
+
+task copyConfs(type: Copy) {
+    description ' copy from src - resources to conf/'
+    from fileTree('src/main/resources/com/codesse/codetest/wordgame')
+    into 'conf/'
+}
+
+//task dSUploadTests(type: Copy) {
+//    description ' uploads test result html pages'
+//    into file(TESTUPDIR)
+//    from fileTree('build/reports')
+//    from fileTree('build/test-results')
+//    println 'file://' + TESTUPDIR + '/tests/index.html'
+//}
+
+task delJBehaveAndTarget(type: Delete) {
+    description " deletes JBehave reports"
+    outputs.upToDateWhen { false }
+    delete "jbehave"
+    delete "target"
+}
+
+//task createJBehaveStyleDirs() {
+//    description " creates jBehave style dirs"
+//    outputs.upToDateWhen { false }
+//    delete "jbehave"
+//    delete "target"
+//}
+
+task jbCopy(type: Copy) {
+  outputs.upToDateWhen { false }
+  from 'style'
+  into 'jbehave/view/style/'
+  into 'target/jbehave/view/style/'
+  into 'build/classes/jbehave/view/style/'
+  include 'jbehave-core.css'
+}
+
+task jBehaveStyleCopy() {
+    description ' jBehave style goes into project'
+    outputs.upToDateWhen { false }
+    copy {
+        from fileTree('style/jbehave-core.css')
+        into file('build/classes/jbehave/view/style/')
+    }
+    copy {
+        from fileTree('style/jbehave-core.css')
+        into file('jbehave/view/style/')
+    }
+    copy {
+        from fileTree('style/jbehave-core.css')
+        into file('target/jbehave/view/style/')
+    }
+}
+
+//task dSUpload(type: Copy) {
+//    description ' build/*.jar upload to somewhere'
+//    from 'build/libs'
+//    into file(TARGETDIR)
+//    include '*.jar'
+//}
+
+//task dSUpDel(type: Delete) {
+//    description ' deletes everything under' + TARGETDIR
+//    delete fileTree(TARGETDIR)
+//}
+
+//task dSUpTestDel(type: Delete) {
+//    description ' deletes everything under' + TESTUPDIR
+//    delete fileTree(TESTUPDIR)
+//}
+
+task delDoxLogSrcDirs(type: Delete) {
+    description ' deletes dox/, log/ and src/ directories recursively.'
+    delete 'log'
+    delete 'dox'
+    delete 'src'
+}
+
+task delLogFiles(type: Delete) {
+    description " deletes logfiles"
+    delete fileTree(dir: 'log', include: '*.log')
+}
+
+task buildCircle1 {
+    dependsOn 'clean'
+    dependsOn 'cleanTest'
+    dependsOn 'delJBehaveAndTarget'
+}
+
+task buildCircle2 {
+    mustRunAfter 'buildCircle1'
+    dependsOn 'test'
+    dependsOn 'jBehave'
+    dependsOn 'newJBehave'
+}
+
+task buildCircle3 {
+    mustRunAfter 'buildCircle1'
+    mustRunAfter 'buildCircle2'
+    dependsOn 'jBehaveStyleCopy'
+    dependsOn 'jbCopy'
+}
+
+task buildCircle4 {
+    mustRunAfter 'buildCircle3'
+//    dependsOn 'dSUpload'
+//    dependsOn 'dSUploadTests'
+    dependsOn 'jacocoTestReport'
+}
+
+test.dependsOn copyConfs
+build.dependsOn copyConfs
+

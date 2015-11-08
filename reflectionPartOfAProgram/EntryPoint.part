@@ -1,0 +1,36 @@
+	public static void main( String[] args )
+	{
+		Class<RekordListaRendezo> reflect;
+		try
+		{
+			reflect = (Class<RekordListaRendezo>) Class.forName( "kajaCalcProj.EgyRekord" );
+			System.out.println( "reflect.getName(): " + reflect.getName() );
+			System.out.println( "reflect.getCanonicalName(): " + reflect.getCanonicalName() );
+			System.out.println( "reflect.getModifiers(): " + reflect.getModifiers() );
+			System.out.println( "reflect.getSimpleName(): " + reflect.getSimpleName() );
+			System.out.println( "reflect.getTypeName(): " + reflect.getTypeName() );
+			System.out.println( "reflect.getDeclaredFields(): " + reflect.getDeclaredFields() );
+			System.out.println( "reflect.getDeclaredMethods(): " + reflect.getDeclaredMethods() );
+			System.out.println( "reflect.getFields(): " + reflect.getFields() );
+			System.out.println( "reflect.getMethods(): " + reflect.getMethods() );
+			System.out.println( "reflect.getPackage(): " + reflect.getPackage() );
+			System.out.println( "reflect.getProtectionDomain(): " + reflect.getProtectionDomain() );
+			System.out.println( "Methods:" );
+			for( Method s : reflect.getMethods() )
+			{
+				System.out.println( s );
+			}
+			System.out.println( "Fields:" );
+			for( Field s : reflect.getFields() )
+			{
+				System.out.println( s );
+			}
+		}
+		catch( ClassNotFoundException e )
+		{
+			e.printStackTrace();
+		}
+
+		Class<Calculator> cal = Calculator.class;
+		System.out.println( "cal.getName(): " + cal.getName() );
+
