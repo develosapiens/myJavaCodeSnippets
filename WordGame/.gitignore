@@ -1,9 +1,0 @@
-.gradle
-dox
-log
-build/jacoco/classpathdumps/**
-build/tmp/**
-build/libs/**
-bin/**
-/build/
-/bin/
